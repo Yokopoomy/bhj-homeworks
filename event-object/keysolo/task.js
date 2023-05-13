@@ -4,9 +4,10 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.timeElement = container.querySelector('.status__time');
 
     this.reset();
-
+    this.time;
     this.registerEvents();
   }
 
@@ -17,6 +18,14 @@ class Game {
   }
 
   registerEvents() {
+    document.addEventListener('keydown', (event) => {
+      if(event.key.toLowerCase() == this.currentSymbol.textContent){
+        this.success();
+      }else{
+        this.fail();
+      }
+    })
+    
     /*
       TODO:
       Написать обработчик события, который откликается
@@ -53,9 +62,11 @@ class Game {
   }
 
   setNewWord() {
+    clearInterval(this.time);
     const word = this.getWord();
 
     this.renderWord(word);
+    this.renderTime(word);
   }
 
   getWord() {
@@ -75,6 +86,22 @@ class Game {
       index = Math.floor(Math.random() * words.length);
 
     return words[index];
+  }
+
+  renderTime(word) {
+    let seconds = word.length;
+    this.timeElement.innerHTML = seconds;
+    this.time = setInterval(() => {
+      if(seconds > 0){
+        this.timeElement.innerHTML = seconds - 1;
+        seconds--;
+        return;
+      }
+      if(seconds === 0){
+        this.fail();
+        return;
+      }
+    }, 1000);
   }
 
   renderWord(word) {
