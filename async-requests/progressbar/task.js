@@ -9,7 +9,7 @@ form.addEventListener('submit', (e) => {
 	xhr.open('POST', form.getAttribute("action"));
 	xhr.upload.addEventListener('progress', function(event) {
 		const percent = (event.loaded / event.total).toFixed(2);
-  	progress.value = percent;
+		progress.value = percent;
 	})
 	xhr.addEventListener('load', () => {
 		alert('Файл успешно загружен на сервер!');
