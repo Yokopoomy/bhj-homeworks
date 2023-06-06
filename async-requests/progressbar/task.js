@@ -13,7 +13,7 @@ form.addEventListener('submit', (e) => {
 	})
 	xhr.addEventListener('load', () => {
 		alert('Файл успешно загружен на сервер!');
-		form.querySelector('.input__wrapper-desc').textContent = '';
+		form.querySelector('.input__wrapper-desc').textContent = 'Имя файла...';
 		progress.value = '0.0';
 	})
 	xhr.send(formData);
