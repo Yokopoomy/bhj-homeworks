@@ -23,7 +23,6 @@ for(item of controls) {
 
 for(item of btnAdd) {
 	item.addEventListener('click', function(element) {
-		let isAdded;
 		const dataId = element.target.closest('.product').dataset.id;
 		const toCart = `
 		<div class="cart__product" data-id="${dataId}">
@@ -31,23 +30,19 @@ for(item of btnAdd) {
       <div class="cart__product-count">${Number(element.target.closest('.product').querySelector('.product__quantity-value').textContent)}</div>
 			<div class="product__del">Удалить</div>
     </div>`
-		const productsInCart = Array.from(cartProducts.querySelectorAll('.cart__product'));
-		for(item of productsInCart) {
-			if(item.dataset.id == dataId) {
-				item.querySelector('.cart__product-count').textContent = Number(item.querySelector('.cart__product-count').textContent) + Number(element.target.closest('.product').querySelector('.product__quantity-value').textContent);
-				isAdded = 1;
-				break;
-			}
-		}
-		if(isAdded != 1) {
+		const cards = Array.from(document.querySelectorAll('.cart__product'));
+		const productInCart = cards.find(item => item.dataset.id == dataId);
+		if(productInCart) {
+			productInCart.querySelector('.cart__product-count').textContent = Number(productInCart.querySelector('.cart__product-count').textContent) + Number(element.target.closest('.product').querySelector('.product__quantity-value').textContent);
+		} else {
 			cartProducts.insertAdjacentHTML("beforeEnd", toCart);
 			cart.style.display = 'block';
 			cartProducts.lastElementChild.querySelector('.product__del').addEventListener('click', function() {
 				this.parentElement.remove();
 				if(cartProducts.querySelectorAll('.product__del').length == 0) {
 					cart.style.display = 'none';
-				}
+					}
 			})
 		}
-	})
+	});
 }
