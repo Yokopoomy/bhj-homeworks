@@ -21,6 +21,7 @@ xhrQuestion.addEventListener('readystatechange', () => {
 				alert('«Спасибо, ваш голос засчитан!»');
 				const index = json.data.answers.findIndex(item => item.includes(element.target.textContent));
 				const xhrVotes = new XMLHttpRequest;
+				
 				xhrVotes.open( 'POST', 'https://students.netoservices.ru/nestjs-backend/poll' );
 				xhrVotes.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
 				xhrVotes.send( `vote=${json.id}&answer=${index}` );
