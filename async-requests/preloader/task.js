@@ -1,11 +1,13 @@
 const items = document.getElementById('items') ;
-let xhr = new XMLHttpRequest();
+const xhr = new XMLHttpRequest();
 
 xhr.addEventListener('readystatechange', () => {
 	if(xhr.readyState === xhr.DONE) {
 		document.getElementById('loader').classList.remove('loader_active');
 		const json = JSON.parse(xhr.responseText);
 		for(let key in json.response.Valute) {
+			const fragment = document.createDocumentFragment();
+			console.log(fragment);
 			const item = `
 			<div class="item">
 			<div class="item__code">${json.response.Valute[key].CharCode}</div>
@@ -13,7 +15,8 @@ xhr.addEventListener('readystatechange', () => {
 			<div class="item__currency">руб.</div>
 			</div>
 			`
-			items.insertAdjacentHTML("beforeEnd", item);
+			items.appendChild(item);
+			//items.appendChild(fragment);
 		}
 	}
 })
